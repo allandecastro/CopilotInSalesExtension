@@ -49,8 +49,3 @@ How to use these examples
 Notes and pointers
 - These examples use connector actions (GetItemWithOrganization / CreateRecordWithOrganization) — adapt the connection reference and environment URLs to match your tenant.
 - The Adaptive Dialogs use built-in Question/Condition/InvokeConnectorAction steps — reuse patterns when building new dialogs.
-
-If you want, I can:
-- Generate a ready-to-import package (ARM/solution) for these dialogs.
-- Convert the YAML to JSON dialog format.
-- Extract the connector input/output definitions into a reusable template.
