@@ -193,7 +193,7 @@ beginDialog:
                   {
                     type: "Action.OpenUrl",
                     title: "Open Case",
-                    url: Concatenate("https://org2736fd3b.crm4.dynamics.com/main.aspx?appid=666b2ecf-6a32-f011-8c4e-6045bdf404c9&forceUCI=1&pagetype=entityrecord&etn=incident&id=", Topic.caseid),
+                    url: Concatenate("https://your_org_.crm4.dynamics.com/main.aspx?appid=your_app_id&forceUCI=1&pagetype=entityrecord&etn=incident&id=", Topic.caseid),
                     iconUrl: "https://img.icons8.com/fluency/48/000000/open-book.png"
                   }
                 ]
