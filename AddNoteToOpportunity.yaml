@@ -1,0 +1,2257 @@
+kind: AdaptiveDialog
+beginDialog:
+  kind: OnRecognizedIntent
+  id: main
+  intent:
+    triggerQueries:
+      - add note to opportunity
+      - attach note to opportunity
+      - leave a comment on an opportunity
+      - create note for opportunity
+      - write a note on this opportunity
+      - can I add a note to the opportunity?
+      - insert remark in opportunity record
+      - update opportunity with a new note
+      - save a message for this opportunity
+
+  actions:
+    - kind: Question
+      id: Question_PQcfis
+      variable: Topic.OpportunityIdentifier
+      prompt: Please provide the Opportunity ID or name.
+      entity: StringPrebuiltEntity
+
+    - kind: ConditionGroup
+      id: ConditionGroup_JuJvEA
+      conditions:
+        - id: ConditionItem_UiXsiM
+          condition: =!IsBlank(Topic.OpportunityIdentifier)
+          actions:
+            - kind: InvokeConnectorAction
+              id: invokeConnectorAction_VDJeA0
+              input:
+                binding:
+                  entityName: opportunities
+                  organization: current
+                  recordId: =Topic.OpportunityIdentifier
+
+              output:
+                kind: SingleVariableOutputBinding
+                variable: Topic.GetItemWithOrganization
+
+              connectionReference: msdyn_salesCopilot.shared_commondataserviceforapps.b359d7a926b4419f8e479ad55b5f3832
+              connectionProperties:
+                mode: Invoker
+
+              dynamicOutputSchema:
+                kind: Record
+                properties:
+                  _accountid_value:
+                    displayName: Account (Value)
+                    description: Internal attribute for storing customerid. Do not use this attribute directly; use parentaccountid instead.
+                    visibility: Advanced
+                    order: 9
+                    type: String
+
+                  _accountid_value@Microsoft.Dynamics.CRM.lookuplogicalname:
+                    displayName: Account (Type)
+                    description: Internal attribute for storing customerid. Do not use this attribute directly; use parentaccountid instead.
+                    visibility: Advanced
+                    order: 7
+                    type: String
+
+                  _campaignid_value:
+                    displayName: Source Campaign (Value)
+                    description: Shows the campaign that the opportunity was created from. The ID is used for tracking the success of the campaign.
+                    visibility: Advanced
+                    order: 119
+                    type: String
+
+                  _campaignid_value@Microsoft.Dynamics.CRM.lookuplogicalname:
+                    displayName: Source Campaign (Type)
+                    description: Shows the campaign that the opportunity was created from. The ID is used for tracking the success of the campaign.
+                    visibility: Advanced
+                    order: 118
+                    type: String
+
+                  _contactid_value:
+                    displayName: Contact (Value)
+                    description: Internal attribute for storing customerid. Do not use this attribute directly; use parentcontactid instead.
+                    visibility: Advanced
+                    order: 21
+                    type: String
+
+                  _contactid_value@Microsoft.Dynamics.CRM.lookuplogicalname:
+                    displayName: Contact (Type)
+                    description: Internal attribute for storing customerid. Do not use this attribute directly; use parentcontactid instead.
+                    visibility: Advanced
+                    order: 19
+                    type: String
+
+                  _createdby_value:
+                    displayName: Created By (Value)
+                    description: Shows who created the record.
+                    visibility: Advanced
+                    order: 26
+                    type: String
+
+                  _createdby_value@Microsoft.Dynamics.CRM.lookuplogicalname:
+                    displayName: Created By (Type)
+                    description: Shows who created the record.
+                    visibility: Advanced
+                    order: 25
+                    type: String
+
+                  _createdonbehalfby_value:
+                    displayName: Created By (Delegate) (Value)
+                    description: Shows who created the record on behalf of another user.
+                    visibility: Advanced
+                    order: 24
+                    type: String
+
+                  _createdonbehalfby_value@Microsoft.Dynamics.CRM.lookuplogicalname:
+                    displayName: Created By (Delegate) (Type)
+                    description: Shows who created the record on behalf of another user.
+                    visibility: Advanced
+                    order: 23
+                    type: String
+
+                  _customerid_value:
+                    displayName: Potential Customer (Value)
+                    description: Select the customer account or contact to provide a quick link to additional customer details, such as address, phone number, activities, and orders.
+                    order: 87
+                    type: String
+
+                  _customerid_value@Microsoft.Dynamics.CRM.lookuplogicalname:
+                    displayName: Potential Customer (Type)
+                    description: Select the customer account or contact to provide a quick link to additional customer details, such as address, phone number, activities, and orders.
+                    order: 86
+                    type: String
+
+                  _modifiedby_value:
+                    displayName: Modified By (Value)
+                    description: Shows who last updated the record.
+                    visibility: Advanced
+                    order: 64
+                    type: String
+
+                  _modifiedby_value@Microsoft.Dynamics.CRM.lookuplogicalname:
+                    displayName: Modified By (Type)
+                    description: Shows who last updated the record.
+                    visibility: Advanced
+                    order: 63
+                    type: String
+
+                  _modifiedonbehalfby_value:
+                    displayName: Modified By (Delegate) (Value)
+                    description: Shows who last updated the record on behalf of another user.
+                    visibility: Advanced
+                    order: 62
+                    type: String
+
+                  _modifiedonbehalfby_value@Microsoft.Dynamics.CRM.lookuplogicalname:
+                    displayName: Modified By (Delegate) (Type)
+                    description: Shows who last updated the record on behalf of another user.
+                    visibility: Advanced
+                    order: 61
+                    type: String
+
+                  _msdyn_opportunitykpiid_value:
+                    displayName: KPI (Value)
+                    description: Maps to opportunity KPI records
+                    visibility: Advanced
+                    order: 57
+                    type: String
+
+                  _msdyn_opportunitykpiid_value@Microsoft.Dynamics.CRM.lookuplogicalname:
+                    displayName: KPI (Type)
+                    description: Maps to opportunity KPI records
+                    visibility: Advanced
+                    order: 56
+                    type: String
+
+                  _msdyn_predictivescoreid_value:
+                    displayName: Predictive Score (Value)
+                    description: Predictive score
+                    visibility: Advanced
+                    order: 89
+                    type: String
+
+                  _msdyn_predictivescoreid_value@Microsoft.Dynamics.CRM.lookuplogicalname:
+                    displayName: Predictive Score (Type)
+                    description: Predictive score
+                    visibility: Advanced
+                    order: 88
+                    type: String
+
+                  _msdyn_segmentid_value:
+                    displayName: Segment Id (Value)
+                    description: Unique identifier for Segment associated with Opportunity.
+                    visibility: Advanced
+                    order: 113
+                    type: String
+
+                  _msdyn_segmentid_value@Microsoft.Dynamics.CRM.lookuplogicalname:
+                    displayName: Segment Id (Type)
+                    description: Unique identifier for Segment associated with Opportunity.
+                    visibility: Advanced
+                    order: 112
+                    type: String
+
+                  _originatingleadid_value:
+                    displayName: Originating Lead (Value)
+                    description: Choose the lead that the opportunity was created from for reporting and analytics. The field is read-only after the opportunity is created and defaults to the correct lead when an opportunity is created from a converted lead.
+                    visibility: Advanced
+                    order: 75
+                    type: String
+
+                  _originatingleadid_value@Microsoft.Dynamics.CRM.lookuplogicalname:
+                    displayName: Originating Lead (Type)
+                    description: Choose the lead that the opportunity was created from for reporting and analytics. The field is read-only after the opportunity is created and defaults to the correct lead when an opportunity is created from a converted lead.
+                    visibility: Advanced
+                    order: 74
+                    type: String
+
+                  _ownerid_value:
+                    displayName: Owner (Value)
+                    description: Owner Id
+                    visibility: Advanced
+                    order: 77
+                    type: String
+
+                  _ownerid_value@Microsoft.Dynamics.CRM.lookuplogicalname:
+                    displayName: Owner (Type)
+                    description: Owner Id
+                    visibility: Advanced
+                    order: 76
+                    type: String
+
+                  _owningbusinessunit_value:
+                    displayName: Owning Business Unit (Value)
+                    description: Unique identifier for the business unit that owns the record
+                    visibility: Advanced
+                    order: 79
+                    type: String
+
+                  _owningbusinessunit_value@Microsoft.Dynamics.CRM.lookuplogicalname:
+                    displayName: Owning Business Unit (Type)
+                    description: Unique identifier for the business unit that owns the record
+                    visibility: Advanced
+                    order: 78
+                    type: String
+
+                  _owningteam_value:
+                    displayName: Owning Team (Value)
+                    description: Unique identifier for the team that owns the record.
+                    visibility: Advanced
+                    order: 81
+                    type: String
+
+                  _owningteam_value@Microsoft.Dynamics.CRM.lookuplogicalname:
+                    displayName: Owning Team (Type)
+                    description: Unique identifier for the team that owns the record.
+                    visibility: Advanced
+                    order: 80
+                    type: String
+
+                  _owninguser_value:
+                    displayName: Owning User (Value)
+                    description: Unique identifier for the user that owns the record.
+                    visibility: Advanced
+                    order: 83
+                    type: String
+
+                  _owninguser_value@Microsoft.Dynamics.CRM.lookuplogicalname:
+                    displayName: Owning User (Type)
+                    description: Unique identifier for the user that owns the record.
+                    visibility: Advanced
+                    order: 82
+                    type: String
+
+                  _parentaccountid_value:
+                    displayName: Account (Value)
+                    description: Choose an account to connect this opportunity to, so that the relationship is visible in reports and analytics, and to provide a quick link to additional details, such as financial information and activities.
+                    order: 10
+                    type: String
+
+                  _parentaccountid_value@Microsoft.Dynamics.CRM.lookuplogicalname:
+                    displayName: Account (Type)
+                    description: Choose an account to connect this opportunity to, so that the relationship is visible in reports and analytics, and to provide a quick link to additional details, such as financial information and activities.
+                    order: 8
+                    type: String
+
+                  _parentcontactid_value:
+                    displayName: Contact (Value)
+                    description: Choose a contact to connect this opportunity to, so that the relationship is visible in reports and analytics.
+                    order: 22
+                    type: String
+
+                  _parentcontactid_value@Microsoft.Dynamics.CRM.lookuplogicalname:
+                    displayName: Contact (Type)
+                    description: Choose a contact to connect this opportunity to, so that the relationship is visible in reports and analytics.
+                    order: 20
+                    type: String
+
+                  _pricelevelid_value:
+                    displayName: Price List (Value)
+                    description: Choose the price list associated with this record to make sure the products associated with the campaign are offered at the correct prices.
+                    visibility: Advanced
+                    order: 93
+                    type: String
+
+                  _pricelevelid_value@Microsoft.Dynamics.CRM.lookuplogicalname:
+                    displayName: Price List (Type)
+                    description: Choose the price list associated with this record to make sure the products associated with the campaign are offered at the correct prices.
+                    visibility: Advanced
+                    order: 92
+                    type: String
+
+                  _slaid_value:
+                    displayName: SLA (Value)
+                    description: Choose the service level agreement (SLA) that you want to apply to the opportunity record.
+                    visibility: Advanced
+                    order: 117
+                    type: String
+
+                  _slaid_value@Microsoft.Dynamics.CRM.lookuplogicalname:
+                    displayName: SLA (Type)
+                    description: Choose the service level agreement (SLA) that you want to apply to the opportunity record.
+                    visibility: Advanced
+                    order: 116
+                    type: String
+
+                  _slainvokedid_value:
+                    displayName: Last SLA applied (Value)
+                    description: Last SLA that was applied to this opportunity. This field is for internal use only.
+                    visibility: Advanced
+                    order: 60
+                    type: String
+
+                  _slainvokedid_value@Microsoft.Dynamics.CRM.lookuplogicalname:
+                    displayName: Last SLA applied (Type)
+                    description: Last SLA that was applied to this opportunity. This field is for internal use only.
+                    visibility: Advanced
+                    order: 59
+                    type: String
+
+                  _transactioncurrencyid_value:
+                    displayName: Currency (Value)
+                    description: Choose the local currency for the record to make sure budgets are reported in the correct currency.
+                    order: 29
+                    type: String
+
+                  _transactioncurrencyid_value@Microsoft.Dynamics.CRM.lookuplogicalname:
+                    displayName: Currency (Type)
+                    description: Choose the local currency for the record to make sure budgets are reported in the correct currency.
+                    order: 28
+                    type: String
+
+                  @odata.id:
+                    displayName: OData Id
+                    description: OData row id
+                    order: 68
+                    type: String
+
+                  actualclosedate:
+                    displayName: Actual Close Date
+                    description: Shows the date and time when the opportunity was closed or canceled.
+                    visibility: Advanced
+                    order: 11
+                    type: Date
+
+                  actualvalue:
+                    displayName: Actual Revenue
+                    description: Type the actual revenue amount for the opportunity for reporting and analysis of estimated versus actual sales. Field defaults to the Est. Revenue value when an opportunity is won.
+                    visibility: Advanced
+                    order: 12
+                    type: Number
+
+                  actualvalue_base:
+                    displayName: Actual Revenue (Base)
+                    description: Value of the Actual Revenue in base currency.
+                    visibility: Advanced
+                    order: 13
+                    type: Number
+
+                  budgetamount:
+                    displayName: Budget amount
+                    description: Type a value between 0 and 1,000,000,000,000 to indicate the lead's potential available budget.
+                    order: 15
+                    type: Number
+
+                  budgetamount_base:
+                    displayName: Budget Amount (Base)
+                    description: Value of the Budget Amount in base currency.
+                    visibility: Advanced
+                    order: 16
+                    type: Number
+
+                  budgetstatus:
+                    displayName: Budget
+                    description: Select the likely budget status for the lead's company. This may help determine the lead rating or your sales approach.
+                    visibility: Advanced
+                    order: 14
+                    dynamicValuesConfig:
+                      capability: List
+
+                    type: Number
+
+                  captureproposalfeedback:
+                    displayName: Proposal Feedback Captured
+                    description: Choose whether the proposal feedback has been captured for the opportunity.
+                    visibility: Advanced
+                    order: 99
+                    type: Boolean
+
+                  closeprobability:
+                    displayName: Probability
+                    description: Type a number from 0 to 100 that represents the likelihood of closing the opportunity. This can aid the sales team in their efforts to convert the opportunity in a sale.
+                    visibility: Advanced
+                    order: 96
+                    type: Number
+
+                  completefinalproposal:
+                    displayName: Final Proposal Ready
+                    description: Select whether a final proposal has been completed for the opportunity.
+                    visibility: Advanced
+                    order: 46
+                    type: Boolean
+
+                  completeinternalreview:
+                    displayName: Complete Internal Review
+                    description: Select whether an internal review has been completed for this opportunity.
+                    visibility: Advanced
+                    order: 17
+                    type: Boolean
+
+                  confirminterest:
+                    displayName: Confirm Interest
+                    description: Select whether the lead confirmed interest in your offerings. This helps in determining the lead quality and the probability of it turning into an opportunity.
+                    visibility: Advanced
+                    order: 18
+                    type: Boolean
+
+                  createdon:
+                    displayName: Created On
+                    description: Date and time when the record was created.
+                    visibility: Advanced
+                    order: 27
+                    type: DateTime
+
+                  currentsituation:
+                    displayName: Current Situation
+                    description: Type notes about the company or organization associated with the opportunity.
+                    visibility: Advanced
+                    order: 30
+                    type: String
+
+                  customerneed:
+                    displayName: Customer Need
+                    description: Type some notes about the customer's requirements, to help the sales team identify products and services that could meet their requirements.
+                    order: 31
+                    type: String
+
+                  customerpainpoints:
+                    displayName: Customer Pain Points
+                    description: Type notes about the customer's pain points to help the sales team identify products and services that could address these pain points.
+                    visibility: Advanced
+                    order: 32
+                    type: String
+
+                  decisionmaker:
+                    displayName: Decision Maker?
+                    description: Select whether your notes include information about who makes the purchase decisions at the lead's company.
+                    visibility: Advanced
+                    order: 34
+                    type: Boolean
+
+                  description:
+                    displayName: Description
+                    description: Type additional information to describe the opportunity, such as possible products to sell or past purchases from the customer.
+                    visibility: Advanced
+                    order: 35
+                    type: String
+
+                  developproposal:
+                    displayName: Develop Proposal
+                    description: Select whether a proposal has been developed for the opportunity.
+                    visibility: Advanced
+                    order: 36
+                    type: Boolean
+
+                  discountamount:
+                    displayName: Opportunity Discount Amount
+                    description: Type the discount amount for the opportunity if the customer is eligible for special savings.
+                    visibility: Advanced
+                    order: 72
+                    type: Number
+
+                  discountamount_base:
+                    displayName: Opportunity Discount Amount (Base)
+                    description: Value of the Opportunity Discount Amount in base currency.
+                    visibility: Advanced
+                    order: 73
+                    type: Number
+
+                  discountpercentage:
+                    displayName: Opportunity Discount (%)
+                    description: Type the discount rate that should be applied to the Product Totals field to include additional savings for the customer in the opportunity.
+                    visibility: Advanced
+                    order: 71
+                    type: Number
+
+                  emailaddress:
+                    displayName: Email Address
+                    description: The primary email address for the entity.
+                    visibility: Advanced
+                    order: 37
+                    type: String
+
+                  estimatedclosedate:
+                    displayName: Est. close date
+                    description: Enter the expected closing date of the opportunity to help make accurate revenue forecasts.
+                    order: 38
+                    type: Date
+
+                  estimatedvalue:
+                    displayName: Est. revenue
+                    description: Type the estimated revenue amount to indicate the potential sale or value of the opportunity for revenue forecasting. This field can be either system-populated or editable based on the selection in the Revenue field.
+                    order: 39
+                    type: Number
+
+                  estimatedvalue_base:
+                    displayName: Est. Revenue (Base)
+                    description: Value of the Est. Revenue in base currency.
+                    visibility: Advanced
+                    order: 40
+                    type: Number
+
+                  evaluatefit:
+                    displayName: Evaluate Fit
+                    description: Select whether the fit between the lead's requirements and your offerings was evaluated.
+                    visibility: Advanced
+                    order: 41
+                    type: Boolean
+
+                  exchangerate:
+                    displayName: Exchange Rate
+                    description: Shows the conversion rate of the record's currency. The exchange rate is used to convert all money fields in the record from the local currency to the system's default currency.
+                    visibility: Advanced
+                    order: 42
+                    type: Number
+
+                  filedebrief:
+                    displayName: File Debrief
+                    description: Choose whether the sales team has recorded detailed notes on the proposals and the account's responses.
+                    visibility: Advanced
+                    order: 44
+                    type: Boolean
+
+                  finaldecisiondate:
+                    displayName: Final Decision Date
+                    description: Enter the date and time when the final decision of the opportunity was made.
+                    visibility: Advanced
+                    order: 45
+                    type: Date
+
+                  freightamount:
+                    displayName: Freight Amount
+                    description: Type the cost of freight or shipping for the products included in the opportunity for use in calculating the Total Amount field.
+                    visibility: Advanced
+                    order: 48
+                    type: Number
+
+                  freightamount_base:
+                    displayName: Freight Amount (Base)
+                    description: Value of the Freight Amount in base currency.
+                    visibility: Advanced
+                    order: 49
+                    type: Number
+
+                  identifycompetitors:
+                    displayName: Identify Competitors
+                    description: Select whether information about competitors is included.
+                    visibility: Advanced
+                    order: 51
+                    type: Boolean
+
+                  identifycustomercontacts:
+                    displayName: Identify Customer Contacts
+                    description: Select whether the customer contacts for this opportunity have been identified.
+                    visibility: Advanced
+                    order: 52
+                    type: Boolean
+
+                  identifypursuitteam:
+                    displayName: Identify Sales Team
+                    description: Choose whether you have recorded who will pursue the opportunity.
+                    visibility: Advanced
+                    order: 53
+                    type: Boolean
+
+                  importsequencenumber:
+                    displayName: Import Sequence Number
+                    description: Sequence number of the import that created this record.
+                    visibility: Advanced
+                    order: 54
+                    type: Number
+
+                  initialcommunication:
+                    displayName: Initial Communication
+                    description: Choose whether someone from the sales team contacted this lead earlier.
+                    visibility: Advanced
+                    order: 55
+                    dynamicValuesConfig:
+                      capability: List
+
+                    type: Number
+
+                  isrevenuesystemcalculated:
+                    displayName: Revenue
+                    description: Select whether the estimated revenue for the opportunity is calculated automatically based on the products entered or entered manually by a user.
+                    visibility: Advanced
+                    order: 107
+                    type: Boolean
+
+                  lastonholdtime:
+                    displayName: Last On Hold Time
+                    description: Contains the date time stamp of the last on hold time.
+                    visibility: Advanced
+                    order: 58
+                    type: DateTime
+
+                  modifiedon:
+                    displayName: Modified On
+                    description: Date and time when the record was modified.
+                    visibility: Advanced
+                    order: 65
+                    type: DateTime
+
+                  msdyn_forecastcategory:
+                    displayName: Forecast category
+                    description: Categories used for forecasting.
+                    visibility: Advanced
+                    order: 47
+                    dynamicValuesConfig:
+                      capability: List
+
+                    type: Number
+
+                  msdyn_gdproptout:
+                    displayName: GDPR Optout
+                    description: Describes whether opportunity is opted out or not
+                    visibility: Advanced
+                    order: 50
+                    type: Boolean
+
+                  msdyn_opportunitygrade:
+                    displayName: (Deprecated) Opportunity Grade
+                    visibility: Advanced
+                    order: 0
+                    dynamicValuesConfig:
+                      capability: List
+
+                    type: Number
+
+                  msdyn_opportunityscore:
+                    displayName: (Deprecated) Opportunity Score
+                    visibility: Advanced
+                    order: 1
+                    type: Number
+
+                  msdyn_opportunityscoretrend:
+                    displayName: (Deprecated) Opportunity Score Trend
+                    visibility: Advanced
+                    order: 2
+                    dynamicValuesConfig:
+                      capability: List
+
+                    type: Number
+
+                  msdyn_scorehistory:
+                    displayName: (Deprecated) Score History
+                    visibility: Advanced
+                    order: 3
+                    type: String
+
+                  msdyn_scorereasons:
+                    displayName: (Deprecated) Score Reasons
+                    visibility: Advanced
+                    order: 4
+                    type: String
+
+                  msdyn_similaropportunities:
+                    displayName: msdyn_similaropportunities
+                    visibility: Advanced
+                    order: 66
+                    type: String
+
+                  name:
+                    displayName: Topic
+                    description: Type a subject or descriptive name, such as the expected order or company name, for the opportunity.
+                    order: 127
+                    type: String
+
+                  need:
+                    displayName: Need
+                    description: Choose how high the level of need is for the lead's company.
+                    visibility: Advanced
+                    order: 67
+                    dynamicValuesConfig:
+                      capability: List
+
+                    type: Number
+
+                  onholdtime:
+                    displayName: On Hold Time (Minutes)
+                    description: Shows the duration in minutes for which the opportunity was on hold.
+                    visibility: Advanced
+                    order: 69
+                    type: Number
+
+                  opportunityid:
+                    displayName: Opportunity
+                    description: Unique identifier of the opportunity.
+                    visibility: Advanced
+                    order: 70
+                    type: String
+
+                  opportunityratingcode:
+                    displayName: Rating
+                    description: Select the expected value or priority of the opportunity based on revenue, customer status, or closing probability.
+                    visibility: Advanced
+                    order: 105
+                    dynamicValuesConfig:
+                      capability: List
+
+                    type: Number
+
+                  overriddencreatedon:
+                    displayName: Record Created On
+                    description: Date and time that the record was migrated.
+                    visibility: Advanced
+                    order: 106
+                    type: DateTime
+
+                  participatesinworkflow:
+                    displayName: Participates in Workflow
+                    description: Information about whether the opportunity participates in workflow rules.
+                    visibility: Advanced
+                    order: 84
+                    type: Boolean
+
+                  presentfinalproposal:
+                    displayName: Present Final Proposal
+                    description: Select whether the final proposal has been presented to the account.
+                    visibility: Advanced
+                    order: 90
+                    type: Boolean
+
+                  presentproposal:
+                    displayName: Presented Proposal
+                    description: Select whether a proposal for the opportunity has been presented to the account.
+                    visibility: Advanced
+                    order: 91
+                    type: Boolean
+
+                  pricingerrorcode:
+                    displayName: "Pricing Error "
+                    description: Pricing error for the opportunity.
+                    visibility: Advanced
+                    order: 94
+                    dynamicValuesConfig:
+                      capability: List
+
+                    type: Number
+
+                  prioritycode:
+                    displayName: Priority
+                    description: Select the priority so that preferred customers or critical issues are handled quickly.
+                    visibility: Advanced
+                    order: 95
+                    dynamicValuesConfig:
+                      capability: List
+
+                    type: Number
+
+                  processid:
+                    displayName: Process Id
+                    description: Contains the id of the process associated with the entity.
+                    visibility: Advanced
+                    order: 98
+                    type: String
+
+                  proposedsolution:
+                    displayName: Proposed Solution
+                    description: Type notes about the proposed solution for the opportunity.
+                    visibility: Advanced
+                    order: 100
+                    type: String
+
+                  purchaseprocess:
+                    displayName: Purchase Process
+                    description: Choose whether an individual or a committee will be involved in the  purchase process for the lead.
+                    visibility: Advanced
+                    order: 101
+                    dynamicValuesConfig:
+                      capability: List
+
+                    type: Number
+
+                  purchasetimeframe:
+                    displayName: Purchase Timeframe
+                    description: Choose how long the lead will likely take to make the purchase.
+                    visibility: Advanced
+                    order: 102
+                    dynamicValuesConfig:
+                      capability: List
+
+                    type: Number
+
+                  pursuitdecision:
+                    displayName: Decide Go/No-Go
+                    description: Select whether the decision about pursuing the opportunity has been made.
+                    visibility: Advanced
+                    order: 33
+                    type: Boolean
+
+                  qualificationcomments:
+                    displayName: Qualification Comments
+                    description: Type comments about the qualification or scoring of the lead.
+                    visibility: Advanced
+                    order: 103
+                    type: String
+
+                  quotecomments:
+                    displayName: Quote Comments
+                    description: Type comments about the quotes associated with the opportunity.
+                    visibility: Advanced
+                    order: 104
+                    type: String
+
+                  resolvefeedback:
+                    displayName: Feedback Resolved
+                    description: Choose whether the proposal feedback has been captured and resolved for the opportunity.
+                    visibility: Advanced
+                    order: 43
+                    type: Boolean
+
+                  salesstage:
+                    displayName: Sales Stage
+                    description: Select the sales stage of this opportunity to aid the sales team in their efforts to win this opportunity.
+                    visibility: Advanced
+                    order: 108
+                    dynamicValuesConfig:
+                      capability: List
+
+                    type: Number
+
+                  salesstagecode:
+                    displayName: Process Code
+                    description: Select the sales process stage for the opportunity to indicate the probability of closing the opportunity.
+                    visibility: Advanced
+                    order: 97
+                    dynamicValuesConfig:
+                      capability: List
+
+                    type: Number
+
+                  schedulefollowup_prospect:
+                    displayName: Scheduled Follow up (Prospect)
+                    description: Enter the date and time of the prospecting follow-up meeting with the lead.
+                    visibility: Advanced
+                    order: 110
+                    type: DateTime
+
+                  schedulefollowup_qualify:
+                    displayName: Scheduled Follow up (Qualify)
+                    description: Enter the date and time of the qualifying follow-up meeting with the lead.
+                    visibility: Advanced
+                    order: 111
+                    type: DateTime
+
+                  scheduleproposalmeeting:
+                    displayName: Schedule Proposal Meeting
+                    description: Enter the date and time of the proposal meeting for the opportunity.
+                    visibility: Advanced
+                    order: 109
+                    type: DateTime
+
+                  sendthankyounote:
+                    displayName: Send Thank You Note
+                    description: Select whether a thank you note has been sent to the account for considering the proposal.
+                    visibility: Advanced
+                    order: 114
+                    type: Boolean
+
+                  skippricecalculation:
+                    displayName: Skip Price Calculation
+                    description: Skip Price Calculation (For Internal Use)
+                    visibility: Advanced
+                    order: 115
+                    dynamicValuesConfig:
+                      capability: List
+
+                    type: Number
+
+                  stageid:
+                    displayName: (Deprecated) Stage Id
+                    description: Contains the id of the stage where the entity is located.
+                    visibility: Advanced
+                    order: 5
+                    type: String
+
+                  statecode:
+                    displayName: Status
+                    description: Shows whether the opportunity is open, won, or lost. Won and lost opportunities are read-only and can't be edited until they are reactivated.
+                    visibility: Advanced
+                    order: 120
+                    dynamicValuesConfig:
+                      capability: List
+
+                    type: Number
+
+                  statuscode:
+                    displayName: Status Reason
+                    description: Select the opportunity's status.
+                    visibility: Advanced
+                    order: 121
+                    dynamicValuesConfig:
+                      capability: List
+
+                    type: Number
+
+                  stepid:
+                    displayName: Step
+                    description: Shows the ID of the workflow step.
+                    visibility: Advanced
+                    order: 122
+                    type: String
+
+                  stepname:
+                    displayName: Pipeline Phase
+                    description: "Shows the current phase in the sales pipeline for the opportunity. "
+                    visibility: Advanced
+                    order: 85
+                    type: String
+
+                  teamsfollowed:
+                    displayName: TeamsFollowed
+                    description: Number of users or conversations followed the record
+                    visibility: Advanced
+                    order: 123
+                    type: Number
+
+                  timeline:
+                    displayName: Timeline
+                    description: Select when the opportunity is likely to be closed.
+                    visibility: Advanced
+                    order: 126
+                    dynamicValuesConfig:
+                      capability: List
+
+                    type: Number
+
+                  timespentbymeonemailandmeetings:
+                    displayName: Time Spent by me
+                    description: Total time spent for emails (read and write) and meetings by me in relation to the opportunity record.
+                    visibility: Advanced
+                    order: 124
+                    type: String
+
+                  timezoneruleversionnumber:
+                    displayName: Time Zone Rule Version Number
+                    description: For internal use only.
+                    visibility: Advanced
+                    order: 125
+                    type: Number
+
+                  totalamount:
+                    displayName: Total Amount
+                    description: Shows the total amount due, calculated as the sum of the products, discounts, freight, and taxes for the opportunity.
+                    visibility: Advanced
+                    order: 128
+                    type: Number
+
+                  totalamount_base:
+                    displayName: Total Amount (Base)
+                    description: Value of the Total Amount in base currency.
+                    visibility: Advanced
+                    order: 129
+                    type: Number
+
+                  totalamountlessfreight:
+                    displayName: Total Pre-Freight Amount
+                    description: Shows the total product amount for the opportunity, minus any discounts. This value is added to freight and tax amounts in the calculation for the total amount of the opportunity.
+                    visibility: Advanced
+                    order: 136
+                    type: Number
+
+                  totalamountlessfreight_base:
+                    displayName: Total Pre-Freight Amount (Base)
+                    description: Value of the Total Pre-Freight Amount in base currency.
+                    visibility: Advanced
+                    order: 137
+                    type: Number
+
+                  totaldiscountamount:
+                    displayName: Total Discount Amount
+                    description: Shows the total discount amount, based on the discount price and rate entered on the opportunity.
+                    visibility: Advanced
+                    order: 132
+                    type: Number
+
+                  totaldiscountamount_base:
+                    displayName: Total Discount Amount (Base)
+                    description: Value of the Total Discount Amount in base currency.
+                    visibility: Advanced
+                    order: 133
+                    type: Number
+
+                  totallineitemamount:
+                    displayName: Total Detail Amount
+                    description: Shows the sum of all existing and write-in products included on the opportunity, based on the specified price list and quantities.
+                    visibility: Advanced
+                    order: 130
+                    type: Number
+
+                  totallineitemamount_base:
+                    displayName: Total Detail Amount (Base)
+                    description: Value of the Total Detail Amount in base currency.
+                    visibility: Advanced
+                    order: 131
+                    type: Number
+
+                  totallineitemdiscountamount:
+                    displayName: Total Line Item Discount Amount
+                    description: Shows the total of the Manual Discount amounts specified on all products included in the opportunity. This value is reflected in the Total Detail Amount field on the opportunity and is added to any discount amount or rate specified on the opportunity.
+                    visibility: Advanced
+                    order: 134
+                    type: Number
+
+                  totallineitemdiscountamount_base:
+                    displayName: Total Line Item Discount Amount (Base)
+                    description: Value of the Total Line Item Discount Amount in base currency.
+                    visibility: Advanced
+                    order: 135
+                    type: Number
+
+                  totaltax:
+                    displayName: Total Tax
+                    description: Shows the total of the Tax amounts specified on all products included in the opportunity, included in the Total Amount field calculation for the opportunity.
+                    visibility: Advanced
+                    order: 138
+                    type: Number
+
+                  totaltax_base:
+                    displayName: Total Tax (Base)
+                    description: Value of the Total Tax in base currency.
+                    visibility: Advanced
+                    order: 139
+                    type: Number
+
+                  traversedpath:
+                    displayName: (Deprecated) Traversed Path
+                    description: A comma separated list of string values representing the unique identifiers of stages in a Business Process Flow Instance in the order that they occur.
+                    visibility: Advanced
+                    order: 6
+                    type: String
+
+                  utcconversiontimezonecode:
+                    displayName: UTC Conversion Time Zone Code
+                    description: Time zone code that was in use when the record was created.
+                    visibility: Advanced
+                    order: 140
+                    type: Number
+
+                  versionnumber:
+                    displayName: Version Number
+                    description: Version Number
+                    visibility: Advanced
+                    order: 141
+                    type: Number
+
+              operationId: GetItemWithOrganization
+
+            - kind: ConditionGroup
+              id: conditionGroup_Nfhzz0
+              conditions:
+                - id: conditionItem_ufWZmZ
+                  condition: =!IsBlank(Topic.GetItemWithOrganization)
+                  actions:
+                    - kind: Question
+                      id: question_2Dra1U
+                      interruptionPolicy:
+                        allowInterruption: true
+
+                      variable: init:Topic.ContentNote
+                      prompt:
+                        text:
+                          - Great! What would you like the note to say?
+                          - Please enter the content for your note.
+
+                      entity: StringPrebuiltEntity
+
+                    - kind: InvokeConnectorAction
+                      id: invokeConnectorAction_eJqHjN
+                      latencyMessageSettings:
+                        allowLatencyMessage: false
+
+                      input:
+                        binding:
+                          entityName: annotations
+                          item: "={'objectid_opportunity@odata.bind': \"/opportunities(\" & Topic.GetItemWithOrganization.opportunityid & \")\", isautonomouslycreated: true, isdocument: false, notetext: Topic.ContentNote, subject: \"Copilot In Sales - Note\"}"
+                          organization: current
+
+                      output:
+                        kind: SingleVariableOutputBinding
+                        variable: Topic.CreateRecordWithOrganization
+
+                      connectionReference: msdyn_salesCopilot.shared_commondataserviceforapps.b359d7a926b4419f8e479ad55b5f3832
+                      connectionProperties:
+                        mode: Invoker
+
+                      dynamicInputSchema:
+                        properties:
+                          entityName:
+                            displayName: Table name
+                            description: Choose a table
+                            isRequired: true
+                            order: 1
+                            dynamicValuesConfig:
+                              capability: List
+
+                            type: String
+
+                          item:
+                            displayName: Row Item
+                            description: Row to create
+                            isRequired: true
+                            order: 2
+                            type:
+                              kind: Record
+                              properties:
+                                annotationid:
+                                  displayName: Note
+                                  description: Unique identifier of the note.
+                                  visibility: Advanced
+                                  order: 8
+                                  type: String
+
+                                channelaccessprofile_annotations@odata.bind:
+                                  displayName: Regarding (Channel Access Profiles)
+                                  description: Unique identifier of the object with which the note is associated.
+                                  visibility: Advanced
+                                  order: 38
+                                  type: String
+
+                                channelaccessprofileruleid@odata.bind:
+                                  displayName: Regarding (Channel Access Profile Rules)
+                                  description: Unique identifier of the object with which the note is associated.
+                                  visibility: Advanced
+                                  order: 37
+                                  type: String
+
+                                documentbody:
+                                  displayName: Document
+                                  description: Contents of the note's attachment.
+                                  visibility: Advanced
+                                  order: 1
+                                  type: String
+
+                                filename:
+                                  displayName: File Name
+                                  description: File name of the note.
+                                  visibility: Advanced
+                                  order: 2
+                                  type: String
+
+                                importsequencenumber:
+                                  displayName: Import Sequence Number
+                                  description: Unique identifier of the data import or data migration that created this record.
+                                  visibility: Advanced
+                                  order: 3
+                                  type: Number
+
+                                isautonomouslycreated:
+                                  displayName: Is autonomously created
+                                  description: Determines whether annotation record was autonomously created on conversation wrap up for the linked case record.
+                                  visibility: Advanced
+                                  order: 4
+                                  type: Boolean
+
+                                isdocument:
+                                  displayName: Is Document
+                                  description: Specifies whether the note is an attachment.
+                                  order: 5
+                                  type: Boolean
+
+                                langid:
+                                  displayName: Language ID
+                                  description: Language identifier for the note.
+                                  visibility: Advanced
+                                  order: 6
+                                  type: String
+
+                                mimetype:
+                                  displayName: Mime Type
+                                  description: MIME type of the note's attachment.
+                                  visibility: Advanced
+                                  order: 7
+                                  type: String
+
+                                notetext:
+                                  displayName: Description
+                                  description: Text of the note.
+                                  order: 0
+                                  type: String
+
+                                objectid_account@odata.bind:
+                                  displayName: Regarding (Accounts)
+                                  description: Unique identifier of the object with which the note is associated.
+                                  visibility: Advanced
+                                  order: 12
+                                  type: String
+
+                                objectid_adx_invitation@odata.bind:
+                                  displayName: Regarding (Invitations)
+                                  description: Unique identifier of the object with which the note is associated.
+                                  visibility: Advanced
+                                  order: 66
+                                  type: String
+
+                                objectid_adx_inviteredemption@odata.bind:
+                                  displayName: Regarding (Invite Redemptions)
+                                  description: Unique identifier of the object with which the note is associated.
+                                  visibility: Advanced
+                                  order: 67
+                                  type: String
+
+                                objectid_adx_portalcomment@odata.bind:
+                                  displayName: Regarding (Portal Comments)
+                                  description: Unique identifier of the object with which the note is associated.
+                                  visibility: Advanced
+                                  order: 90
+                                  type: String
+
+                                objectid_appointment@odata.bind:
+                                  displayName: Regarding (Appointments)
+                                  description: Unique identifier of the object with which the note is associated.
+                                  visibility: Advanced
+                                  order: 17
+                                  type: String
+
+                                objectid_approvalprocess@odata.bind:
+                                  displayName: Regarding (Approval Processes)
+                                  description: Unique identifier of the object with which the note is associated.
+                                  visibility: Advanced
+                                  order: 18
+                                  type: String
+
+                                objectid_approvalstageapproval@odata.bind:
+                                  displayName: Regarding (Approval Stage Approvals)
+                                  description: Unique identifier of the object with which the note is associated.
+                                  visibility: Advanced
+                                  order: 19
+                                  type: String
+
+                                objectid_bookableresource@odata.bind:
+                                  displayName: Regarding (Bookable Resources)
+                                  description: Unique identifier of the object with which the note is associated.
+                                  visibility: Advanced
+                                  order: 28
+                                  type: String
+
+                                objectid_bookableresourcebooking@odata.bind:
+                                  displayName: Regarding (Bookable Resource Bookings)
+                                  description: Unique identifier of the object with which the note is associated.
+                                  visibility: Advanced
+                                  order: 24
+                                  type: String
+
+                                objectid_bookableresourcebookingheader@odata.bind:
+                                  displayName: Regarding (Bookable Resource Booking Headers)
+                                  description: Unique identifier of the object with which the note is associated.
+                                  visibility: Advanced
+                                  order: 23
+                                  type: String
+
+                                objectid_bookableresourcecategoryassn@odata.bind:
+                                  displayName: Regarding (Bookable Resource Category Assns)
+                                  description: Unique identifier of the object with which the note is associated.
+                                  visibility: Advanced
+                                  order: 25
+                                  type: String
+
+                                objectid_bookableresourcecharacteristic@odata.bind:
+                                  displayName: Regarding (Bookable Resource Characteristics)
+                                  description: Unique identifier of the object with which the note is associated.
+                                  visibility: Advanced
+                                  order: 26
+                                  type: String
+
+                                objectid_bookableresourcegroup@odata.bind:
+                                  displayName: Regarding (Bookable Resource Groups)
+                                  description: Unique identifier of the object with which the note is associated.
+                                  visibility: Advanced
+                                  order: 27
+                                  type: String
+
+                                objectid_bulkoperation@odata.bind:
+                                  displayName: Regarding (Quick Campaigns)
+                                  description: Unique identifier of the object with which the note is associated.
+                                  visibility: Advanced
+                                  order: 94
+                                  type: String
+
+                                objectid_calendar@odata.bind:
+                                  displayName: Regarding (Calendars)
+                                  description: Unique identifier of the object with which the note is associated.
+                                  visibility: Advanced
+                                  order: 29
+                                  type: String
+
+                                objectid_campaign@odata.bind:
+                                  displayName: Regarding (Campaigns)
+                                  description: Unique identifier of the object with which the note is associated.
+                                  visibility: Advanced
+                                  order: 32
+                                  type: String
+
+                                objectid_campaignactivity@odata.bind:
+                                  displayName: Regarding (Campaign Activities)
+                                  description: Unique identifier of the object with which the note is associated.
+                                  visibility: Advanced
+                                  order: 30
+                                  type: String
+
+                                objectid_campaignresponse@odata.bind:
+                                  displayName: Regarding (Campaign Responses)
+                                  description: Unique identifier of the object with which the note is associated.
+                                  visibility: Advanced
+                                  order: 31
+                                  type: String
+
+                                objectid_chat@odata.bind:
+                                  displayName: Regarding (Teams chats)
+                                  description: Unique identifier of the object with which the note is associated.
+                                  visibility: Advanced
+                                  order: 114
+                                  type: String
+
+                                objectid_commitment@odata.bind:
+                                  displayName: Regarding (Commitments)
+                                  description: Unique identifier of the object with which the note is associated.
+                                  visibility: Advanced
+                                  order: 39
+                                  type: String
+
+                                objectid_competitor@odata.bind:
+                                  displayName: Regarding (Competitors)
+                                  description: Unique identifier of the object with which the note is associated.
+                                  visibility: Advanced
+                                  order: 40
+                                  type: String
+
+                                objectid_contact@odata.bind:
+                                  displayName: Regarding (Contacts)
+                                  description: Unique identifier of the object with which the note is associated.
+                                  visibility: Advanced
+                                  order: 41
+                                  type: String
+
+                                objectid_contract@odata.bind:
+                                  displayName: Regarding (Contracts)
+                                  description: Unique identifier of the object with which the note is associated.
+                                  visibility: Advanced
+                                  order: 43
+                                  type: String
+
+                                objectid_contractdetail@odata.bind:
+                                  displayName: Regarding (Contract Lines)
+                                  description: Unique identifier of the object with which the note is associated.
+                                  visibility: Advanced
+                                  order: 42
+                                  type: String
+
+                                objectid_convertrule@odata.bind:
+                                  displayName: Regarding (Record Creation and Update Rules)
+                                  description: Unique identifier of the object with which the note is associated.
+                                  visibility: Advanced
+                                  order: 97
+                                  type: String
+
+                                objectid_duplicaterule@odata.bind:
+                                  displayName: Regarding (Duplicate Detection Rules)
+                                  description: Unique identifier of the object with which the note is associated.
+                                  visibility: Advanced
+                                  order: 52
+                                  type: String
+
+                                objectid_email@odata.bind:
+                                  displayName: Regarding (Email Messages)
+                                  description: Unique identifier of the object with which the note is associated.
+                                  visibility: Advanced
+                                  order: 53
+                                  type: String
+
+                                objectid_emailserverprofile@odata.bind:
+                                  displayName: Regarding (Email Server Profiles)
+                                  description: Unique identifier of the object with which the note is associated.
+                                  visibility: Advanced
+                                  order: 54
+                                  type: String
+
+                                objectid_entitlement@odata.bind:
+                                  displayName: Regarding (Entitlements)
+                                  description: Unique identifier of the object with which the note is associated.
+                                  visibility: Advanced
+                                  order: 57
+                                  type: String
+
+                                objectid_entitlementchannel@odata.bind:
+                                  displayName: Regarding (Entitlement Channels)
+                                  description: Unique identifier of the object with which the note is associated.
+                                  visibility: Advanced
+                                  order: 55
+                                  type: String
+
+                                objectid_entitlementtemplate@odata.bind:
+                                  displayName: Regarding (Entitlement Templates)
+                                  description: Unique identifier of the object with which the note is associated.
+                                  visibility: Advanced
+                                  order: 56
+                                  type: String
+
+                                objectid_equipment@odata.bind:
+                                  displayName: Regarding (Facilities/Equipment)
+                                  description: Unique identifier of the object with which the note is associated.
+                                  visibility: Advanced
+                                  order: 58
+                                  type: String
+
+                                objectid_fax@odata.bind:
+                                  displayName: Regarding (Faxes)
+                                  description: Unique identifier of the object with which the note is associated.
+                                  visibility: Advanced
+                                  order: 59
+                                  type: String
+
+                                objectid_goal@odata.bind:
+                                  displayName: Regarding (Goals)
+                                  description: Unique identifier of the object with which the note is associated.
+                                  visibility: Advanced
+                                  order: 64
+                                  type: String
+
+                                objectid_incident@odata.bind:
+                                  displayName: Regarding (Cases)
+                                  description: Unique identifier of the object with which the note is associated.
+                                  visibility: Advanced
+                                  order: 34
+                                  type: String
+
+                                objectid_incidentresolution@odata.bind:
+                                  displayName: Regarding (Case Resolutions)
+                                  description: Unique identifier of the object with which the note is associated.
+                                  visibility: Advanced
+                                  order: 33
+                                  type: String
+
+                                objectid_invoice@odata.bind:
+                                  displayName: Regarding (Invoices)
+                                  description: Unique identifier of the object with which the note is associated.
+                                  visibility: Advanced
+                                  order: 68
+                                  type: String
+
+                                objectid_kbarticle@odata.bind:
+                                  displayName: Regarding (Articles)
+                                  description: Unique identifier of the object with which the note is associated.
+                                  visibility: Advanced
+                                  order: 21
+                                  type: String
+
+                                objectid_knowledgearticle@odata.bind:
+                                  displayName: Regarding (Knowledge Articles)
+                                  description: Unique identifier of the object with which the note is associated.
+                                  visibility: Advanced
+                                  order: 74
+                                  type: String
+
+                                objectid_knowledgebaserecord@odata.bind:
+                                  displayName: Regarding (Knowledge Base Records)
+                                  description: Unique identifier of the object with which the note is associated.
+                                  visibility: Advanced
+                                  order: 75
+                                  type: String
+
+                                objectid_lead@odata.bind:
+                                  displayName: Regarding (Leads)
+                                  description: Unique identifier of the object with which the note is associated.
+                                  visibility: Advanced
+                                  order: 76
+                                  type: String
+
+                                objectid_letter@odata.bind:
+                                  displayName: Regarding (Letters)
+                                  description: Unique identifier of the object with which the note is associated.
+                                  visibility: Advanced
+                                  order: 77
+                                  type: String
+
+                                objectid_list@odata.bind:
+                                  displayName: Regarding (Marketing Lists)
+                                  description: Unique identifier of the object with which the note is associated.
+                                  visibility: Advanced
+                                  order: 79
+                                  type: String
+
+                                objectid_mailbox@odata.bind:
+                                  displayName: Regarding (Mailboxes)
+                                  description: Unique identifier of the object with which the note is associated.
+                                  visibility: Advanced
+                                  order: 78
+                                  type: String
+
+                                objectid_msdyn_agentcopilotterm@odata.bind:
+                                  displayName: Regarding (Agent Copilot Terms)
+                                  description: Unique identifier of the object with which the note is associated.
+                                  visibility: Advanced
+                                  order: 13
+                                  type: String
+
+                                objectid_msdyn_aifptrainingdocument@odata.bind:
+                                  displayName: Regarding (AI Form Processing Document)
+                                  description: Unique identifier of the object with which the note is associated.
+                                  visibility: Advanced
+                                  order: 14
+                                  type: String
+
+                                objectid_msdyn_aimodel@odata.bind:
+                                  displayName: Regarding (AI Models)
+                                  description: Unique identifier of the object with which the note is associated.
+                                  visibility: Advanced
+                                  order: 15
+                                  type: String
+
+                                objectid_msdyn_aiodimage@odata.bind:
+                                  displayName: Regarding (AI Object Detection Images)
+                                  description: Unique identifier of the object with which the note is associated.
+                                  visibility: Advanced
+                                  order: 16
+                                  type: String
+
+                                objectid_msdyn_copilottranscript@odata.bind:
+                                  displayName: Regarding (Copilot Transcripts)
+                                  description: Unique identifier of the object with which the note is associated.
+                                  visibility: Advanced
+                                  order: 45
+                                  type: String
+
+                                objectid_msdyn_customerasset@odata.bind:
+                                  displayName: Regarding (Customer Assets)
+                                  description: Unique identifier of the object with which the note is associated.
+                                  visibility: Advanced
+                                  order: 46
+                                  type: String
+
+                                objectid_msdyn_flow_approval@odata.bind:
+                                  displayName: Regarding (Approvals)
+                                  description: Unique identifier of the object with which the note is associated.
+                                  visibility: Advanced
+                                  order: 20
+                                  type: String
+
+                                objectid_msdyn_forecastconfiguration@odata.bind:
+                                  displayName: Regarding (Forecast configurations)
+                                  description: Unique identifier of the object with which the note is associated.
+                                  visibility: Advanced
+                                  order: 61
+                                  type: String
+
+                                objectid_msdyn_forecastpredictionstatus@odata.bind:
+                                  displayName: Regarding (Forecast Prediction Status)
+                                  description: Unique identifier of the object with which the note is associated.
+                                  visibility: Advanced
+                                  order: 62
+                                  type: String
+
+                                objectid_msdyn_functionallocation@odata.bind:
+                                  displayName: Regarding (Functional Locations)
+                                  description: Unique identifier of the object with which the note is associated.
+                                  visibility: Advanced
+                                  order: 63
+                                  type: String
+
+                                objectid_msdyn_iotalert@odata.bind:
+                                  displayName: Regarding (IoT Alerts)
+                                  description: Unique identifier of the object with which the note is associated.
+                                  visibility: Advanced
+                                  order: 69
+                                  type: String
+
+                                objectid_msdyn_iotdevice@odata.bind:
+                                  displayName: Regarding (IoT Devices)
+                                  description: Unique identifier of the object with which the note is associated.
+                                  visibility: Advanced
+                                  order: 73
+                                  type: String
+
+                                objectid_msdyn_iotdevicecategory@odata.bind:
+                                  displayName: Regarding (IoT Device Categories)
+                                  description: Unique identifier of the object with which the note is associated.
+                                  visibility: Advanced
+                                  order: 70
+                                  type: String
+
+                                objectid_msdyn_iotdevicecommand@odata.bind:
+                                  displayName: Regarding (IoT Device Commands)
+                                  description: Unique identifier of the object with which the note is associated.
+                                  visibility: Advanced
+                                  order: 71
+                                  type: String
+
+                                objectid_msdyn_iotdeviceregistrationhistory@odata.bind:
+                                  displayName: Regarding (IoT Device Registration History)
+                                  description: Unique identifier of the object with which the note is associated.
+                                  visibility: Advanced
+                                  order: 72
+                                  type: String
+
+                                objectid_msdyn_liveconversation@odata.bind:
+                                  displayName: Regarding (Ongoing conversations (Deprecated))
+                                  description: Unique identifier of the object with which the note is associated.
+                                  visibility: Advanced
+                                  order: 80
+                                  type: String
+
+                                objectid_msdyn_ocflaggedspam@odata.bind:
+                                  displayName: Regarding (Flagged spams)
+                                  description: Unique identifier of the object with which the note is associated.
+                                  visibility: Advanced
+                                  order: 60
+                                  type: String
+
+                                objectid_msdyn_ocliveworkitem@odata.bind:
+                                  displayName: Regarding (Conversations)
+                                  description: Unique identifier of the object with which the note is associated.
+                                  visibility: Advanced
+                                  order: 44
+                                  type: String
+
+                                objectid_msdyn_ocsession@odata.bind:
+                                  displayName: Regarding (Sessions)
+                                  description: Unique identifier of the object with which the note is associated.
+                                  visibility: Advanced
+                                  order: 104
+                                  type: String
+
+                                objectid_msdyn_overflowactionconfig@odata.bind:
+                                  displayName: Regarding (Overflow Action Configs)
+                                  description: Unique identifier of the object with which the note is associated.
+                                  visibility: Advanced
+                                  order: 85
+                                  type: String
+
+                                objectid_msdyn_personalsoundsetting@odata.bind:
+                                  displayName: Regarding (Personal sound settings)
+                                  description: Unique identifier of the object with which the note is associated.
+                                  visibility: Advanced
+                                  order: 86
+                                  type: String
+
+                                objectid_msdyn_playbookinstance@odata.bind:
+                                  displayName: Regarding (Playbooks)
+                                  description: Unique identifier of the object with which the note is associated.
+                                  visibility: Advanced
+                                  order: 89
+                                  type: String
+
+                                objectid_msdyn_playbooktemplate@odata.bind:
+                                  displayName: Regarding (Playbook templates)
+                                  description: Unique identifier of the object with which the note is associated.
+                                  visibility: Advanced
+                                  order: 88
+                                  type: String
+
+                                objectid_msdyn_postalbum@odata.bind:
+                                  displayName: Regarding (Profile Albums)
+                                  description: Unique identifier of the object with which the note is associated.
+                                  visibility: Advanced
+                                  order: 93
+                                  type: String
+
+                                objectid_msdyn_salessuggestion@odata.bind:
+                                  displayName: Regarding (Insights)
+                                  description: Unique identifier of the object with which the note is associated.
+                                  visibility: Advanced
+                                  order: 65
+                                  type: String
+
+                                objectid_msdyn_soundfile@odata.bind:
+                                  displayName: Regarding (Audio Files)
+                                  description: Unique identifier of the object with which the note is associated.
+                                  visibility: Advanced
+                                  order: 22
+                                  type: String
+
+                                objectid_msdyn_soundnotificationsetting@odata.bind:
+                                  displayName: Regarding (Sound notification settings)
+                                  description: Unique identifier of the object with which the note is associated.
+                                  visibility: Advanced
+                                  order: 107
+                                  type: String
+
+                                objectid_msdyn_summarysynthesizerinput@odata.bind:
+                                  displayName: Regarding (Summary Synthesizer Inputs)
+                                  description: Unique identifier of the object with which the note is associated.
+                                  visibility: Advanced
+                                  order: 108
+                                  type: String
+
+                                objectid_msdyn_summarysynthesizeroutput@odata.bind:
+                                  displayName: Regarding (summarysynthesizeroutputs)
+                                  description: Unique identifier of the object with which the note is associated.
+                                  visibility: Advanced
+                                  order: 110
+                                  type: String
+
+                                objectid_msdyn_swarm@odata.bind:
+                                  displayName: Regarding (Swarms)
+                                  description: Unique identifier of the object with which the note is associated.
+                                  visibility: Advanced
+                                  order: 111
+                                  type: String
+
+                                objectid_msdyn_synthesizeroutput@odata.bind:
+                                  displayName: Regarding (Summary Synthesizer Outputs)
+                                  description: Unique identifier of the object with which the note is associated.
+                                  visibility: Advanced
+                                  order: 109
+                                  type: String
+
+                                objectid_msdyn_taggedrecord@odata.bind:
+                                  displayName: Regarding (Tagged Records)
+                                  description: Unique identifier of the object with which the note is associated.
+                                  visibility: Advanced
+                                  order: 112
+                                  type: String
+
+                                objectid_msdyn_transcript@odata.bind:
+                                  displayName: Regarding (Transcripts)
+                                  description: Unique identifier of the object with which the note is associated.
+                                  visibility: Advanced
+                                  order: 115
+                                  type: String
+
+                                objectid_msfp_alert@odata.bind:
+                                  displayName: Regarding (Customer Voice alert)
+                                  description: Unique identifier of the object with which the note is associated.
+                                  visibility: Advanced
+                                  order: 47
+                                  type: String
+
+                                objectid_msfp_question@odata.bind:
+                                  displayName: Regarding (Customer Voice survey  questions)
+                                  description: Unique identifier of the object with which the note is associated.
+                                  visibility: Advanced
+                                  order: 48
+                                  type: String
+
+                                objectid_msfp_surveyinvite@odata.bind:
+                                  displayName: Regarding (Customer Voice survey invites)
+                                  description: Unique identifier of the object with which the note is associated.
+                                  visibility: Advanced
+                                  order: 49
+                                  type: String
+
+                                objectid_msfp_surveyresponse@odata.bind:
+                                  displayName: Regarding (Customer Voice survey responses)
+                                  description: Unique identifier of the object with which the note is associated.
+                                  visibility: Advanced
+                                  order: 50
+                                  type: String
+
+                                objectid_mspcat_catalogsubmissionfiles@odata.bind:
+                                  displayName: Regarding (Catalog Submission Files)
+                                  description: Unique identifier of the object with which the note is associated.
+                                  visibility: Advanced
+                                  order: 35
+                                  type: String
+
+                                objectid_opportunity@odata.bind:
+                                  displayName: Regarding (Opportunities)
+                                  description: Unique identifier of the object with which the note is associated.
+                                  visibility: Advanced
+                                  order: 81
+                                  type: String
+                                  default: =if(empty(Topic.GetItemWithOrganization.opportunityid), "", "/opportunities('" + Topic.GetItemWithOrganization.opportunityid + "')")
+
+                                objectid_opportunityclose@odata.bind:
+                                  displayName: Regarding (Opportunity Close Activities)
+                                  description: Unique identifier of the object with which the note is associated.
+                                  visibility: Advanced
+                                  order: 82
+                                  type: String
+
+                                objectid_orderclose@odata.bind:
+                                  displayName: Regarding (Order Close Activities)
+                                  description: Unique identifier of the object with which the note is associated.
+                                  visibility: Advanced
+                                  order: 83
+                                  type: String
+
+                                objectid_phonecall@odata.bind:
+                                  displayName: Regarding (Phone Calls)
+                                  description: Unique identifier of the object with which the note is associated.
+                                  visibility: Advanced
+                                  order: 87
+                                  type: String
+
+                                objectid_product@odata.bind:
+                                  displayName: Regarding (Products)
+                                  description: Unique identifier of the object with which the note is associated.
+                                  visibility: Advanced
+                                  order: 92
+                                  type: String
+
+                                objectid_profileruleitem@odata.bind:
+                                  displayName: Regarding (Channel Access Profile Rule Items)
+                                  description: Unique identifier of the object with which the note is associated.
+                                  visibility: Advanced
+                                  order: 36
+                                  type: String
+
+                                objectid_quote@odata.bind:
+                                  displayName: Regarding (Quotes)
+                                  description: Unique identifier of the object with which the note is associated.
+                                  visibility: Advanced
+                                  order: 96
+                                  type: String
+
+                                objectid_quoteclose@odata.bind:
+                                  displayName: Regarding (Quote Close Activities)
+                                  description: Unique identifier of the object with which the note is associated.
+                                  visibility: Advanced
+                                  order: 95
+                                  type: String
+
+                                objectid_recurringappointmentmaster@odata.bind:
+                                  displayName: Regarding (Recurring Appointments)
+                                  description: Unique identifier of the object with which the note is associated.
+                                  visibility: Advanced
+                                  order: 98
+                                  type: String
+
+                                objectid_resourcespec@odata.bind:
+                                  displayName: Regarding (Resource Specifications)
+                                  description: Unique identifier of the object with which the note is associated.
+                                  visibility: Advanced
+                                  order: 99
+                                  type: String
+
+                                objectid_routingrule@odata.bind:
+                                  displayName: Regarding (Routing Rule Sets)
+                                  description: Unique identifier of the object with which the note is associated.
+                                  visibility: Advanced
+                                  order: 100
+                                  type: String
+
+                                objectid_routingruleitem@odata.bind:
+                                  displayName: Regarding (Rule Items)
+                                  description: Unique identifier of the object with which the note is associated.
+                                  visibility: Advanced
+                                  order: 101
+                                  type: String
+
+                                objectid_salesorder@odata.bind:
+                                  displayName: Regarding (Orders)
+                                  description: Unique identifier of the object with which the note is associated.
+                                  visibility: Advanced
+                                  order: 84
+                                  type: String
+
+                                objectid_service@odata.bind:
+                                  displayName: Regarding (Services)
+                                  description: Unique identifier of the object with which the note is associated.
+                                  visibility: Advanced
+                                  order: 103
+                                  type: String
+
+                                objectid_serviceappointment@odata.bind:
+                                  displayName: Regarding (Service Activities)
+                                  description: Unique identifier of the object with which the note is associated.
+                                  visibility: Advanced
+                                  order: 102
+                                  type: String
+
+                                objectid_sharepointdocument@odata.bind:
+                                  displayName: Regarding (Documents)
+                                  description: Unique identifier of the object with which the note is associated.
+                                  visibility: Advanced
+                                  order: 51
+                                  type: String
+
+                                objectid_sla@odata.bind:
+                                  displayName: Regarding (SLAs)
+                                  description: Unique identifier of the object with which the note is associated.
+                                  visibility: Advanced
+                                  order: 105
+                                  type: String
+
+                                objectid_socialactivity@odata.bind:
+                                  displayName: Regarding (Social Activities)
+                                  description: Unique identifier of the object with which the note is associated.
+                                  visibility: Advanced
+                                  order: 106
+                                  type: String
+
+                                objectid_task@odata.bind:
+                                  displayName: Regarding (Tasks)
+                                  description: Unique identifier of the object with which the note is associated.
+                                  visibility: Advanced
+                                  order: 113
+                                  type: String
+
+                                objectid_workflow@odata.bind:
+                                  displayName: Regarding (Processes)
+                                  description: Unique identifier of the object with which the note is associated.
+                                  visibility: Advanced
+                                  order: 91
+                                  type: String
+
+                                objecttypecode:
+                                  displayName: "Object Type "
+                                  description: Type of entity with which the note is associated.
+                                  visibility: Advanced
+                                  order: 9
+                                  dynamicValuesConfig:
+                                    capability: List
+
+                                  type: String
+
+                                overriddencreatedon:
+                                  displayName: Record Created On
+                                  description: Date and time that the record was migrated.
+                                  visibility: Advanced
+                                  order: 11
+                                  type: DateTime
+
+                                ownerid@odata.bind:
+                                  displayName: Owner (Owners)
+                                  description: Unique identifier of the user or team who owns the note.
+                                  visibility: Advanced
+                                  order: 10
+                                  type: String
+
+                                stepid:
+                                  displayName: Step Id
+                                  description: workflow step id associated with the note.
+                                  visibility: Advanced
+                                  order: 116
+                                  type: String
+
+                                subject:
+                                  displayName: Title
+                                  description: Subject associated with the note.
+                                  isRequired: true
+                                  order: 117
+                                  type: String
+
+                          organization:
+                            displayName: Environment
+                            description: Choose an environment
+                            isRequired: true
+                            order: 0
+                            dynamicValuesConfig:
+                              capability: List
+
+                            type: String
+
+                          x-ms-odata-metadata-full:
+                            displayName: Return Full Metadata
+                            description: The header parameter to customer to opt-in returning full odata metadata in response.
+                            visibility: Advanced
+                            order: 3
+                            type: Boolean
+
+                      dynamicOutputSchema:
+                        kind: Record
+                        properties:
+                          _createdby_value:
+                            displayName: Created By (Value)
+                            description: Unique identifier of the user who created the note.
+                            visibility: Advanced
+                            order: 3
+                            type: String
+
+                          _createdby_value@Microsoft.Dynamics.CRM.lookuplogicalname:
+                            displayName: Created By (Type)
+                            description: Unique identifier of the user who created the note.
+                            visibility: Advanced
+                            order: 2
+                            type: String
+
+                          _createdonbehalfby_value:
+                            displayName: Created By (Delegate) (Value)
+                            description: Unique identifier of the delegate user who created the annotation.
+                            visibility: Advanced
+                            order: 1
+                            type: String
+
+                          _createdonbehalfby_value@Microsoft.Dynamics.CRM.lookuplogicalname:
+                            displayName: Created By (Delegate) (Type)
+                            description: Unique identifier of the delegate user who created the annotation.
+                            visibility: Advanced
+                            order: 0
+                            type: String
+
+                          _modifiedby_value:
+                            displayName: Modified By (Value)
+                            description: Unique identifier of the user who last modified the note.
+                            visibility: Advanced
+                            order: 17
+                            type: String
+
+                          _modifiedby_value@Microsoft.Dynamics.CRM.lookuplogicalname:
+                            displayName: Modified By (Type)
+                            description: Unique identifier of the user who last modified the note.
+                            visibility: Advanced
+                            order: 16
+                            type: String
+
+                          _modifiedonbehalfby_value:
+                            displayName: Modified By (Delegate) (Value)
+                            description: Unique identifier of the delegate user who last modified the annotation.
+                            visibility: Advanced
+                            order: 15
+                            type: String
+
+                          _modifiedonbehalfby_value@Microsoft.Dynamics.CRM.lookuplogicalname:
+                            displayName: Modified By (Delegate) (Type)
+                            description: Unique identifier of the delegate user who last modified the annotation.
+                            visibility: Advanced
+                            order: 14
+                            type: String
+
+                          _objectid_value:
+                            displayName: Regarding (Value)
+                            description: Unique identifier of the object with which the note is associated.
+                            visibility: Advanced
+                            order: 33
+                            type: String
+
+                          _objectid_value@Microsoft.Dynamics.CRM.lookuplogicalname:
+                            displayName: Regarding (Type)
+                            description: Unique identifier of the object with which the note is associated.
+                            visibility: Advanced
+                            order: 32
+                            type: String
+
+                          _ownerid_value:
+                            displayName: Owner (Value)
+                            description: Unique identifier of the user or team who owns the note.
+                            visibility: Advanced
+                            order: 23
+                            type: String
+
+                          _ownerid_value@Microsoft.Dynamics.CRM.lookuplogicalname:
+                            displayName: Owner (Type)
+                            description: Unique identifier of the user or team who owns the note.
+                            visibility: Advanced
+                            order: 22
+                            type: String
+
+                          _owningbusinessunit_value:
+                            displayName: Owning Business Unit (Value)
+                            description: Unique identifier of the business unit that owns the note.
+                            visibility: Advanced
+                            order: 25
+                            type: String
+
+                          _owningbusinessunit_value@Microsoft.Dynamics.CRM.lookuplogicalname:
+                            displayName: Owning Business Unit (Type)
+                            description: Unique identifier of the business unit that owns the note.
+                            visibility: Advanced
+                            order: 24
+                            type: String
+
+                          _owningteam_value:
+                            displayName: Owning Team (Value)
+                            description: Unique identifier of the team who owns the note.
+                            visibility: Advanced
+                            order: 27
+                            type: String
+
+                          _owningteam_value@Microsoft.Dynamics.CRM.lookuplogicalname:
+                            displayName: Owning Team (Type)
+                            description: Unique identifier of the team who owns the note.
+                            visibility: Advanced
+                            order: 26
+                            type: String
+
+                          _owninguser_value:
+                            displayName: Owning User (Value)
+                            description: Unique identifier of the user who owns the note.
+                            visibility: Advanced
+                            order: 29
+                            type: String
+
+                          _owninguser_value@Microsoft.Dynamics.CRM.lookuplogicalname:
+                            displayName: Owning User (Type)
+                            description: Unique identifier of the user who owns the note.
+                            visibility: Advanced
+                            order: 28
+                            type: String
+
+                          @odata.id:
+                            displayName: OData Id
+                            description: OData row id
+                            order: 21
+                            type: String
+
+                          annotationid:
+                            displayName: Note
+                            description: Unique identifier of the note.
+                            visibility: Advanced
+                            order: 19
+                            type: String
+
+                          createdon:
+                            displayName: Created On
+                            description: Date and time when the note was created.
+                            visibility: Advanced
+                            order: 4
+                            type: DateTime
+
+                          documentbody:
+                            displayName: Document
+                            description: Contents of the note's attachment.
+                            visibility: Advanced
+                            order: 6
+                            type: String
+
+                          filename:
+                            displayName: File Name
+                            description: File name of the note.
+                            visibility: Advanced
+                            order: 7
+                            type: String
+
+                          filesize:
+                            displayName: File Size (Bytes)
+                            description: File size of the note.
+                            visibility: Advanced
+                            order: 8
+                            type: Number
+
+                          importsequencenumber:
+                            displayName: Import Sequence Number
+                            description: Unique identifier of the data import or data migration that created this record.
+                            visibility: Advanced
+                            order: 9
+                            type: Number
+
+                          isautonomouslycreated:
+                            displayName: Is autonomously created
+                            description: Determines whether annotation record was autonomously created on conversation wrap up for the linked case record.
+                            visibility: Advanced
+                            order: 10
+                            type: Boolean
+
+                          isdocument:
+                            displayName: Is Document
+                            description: Specifies whether the note is an attachment.
+                            order: 11
+                            type: Boolean
+
+                          langid:
+                            displayName: Language ID
+                            description: Language identifier for the note.
+                            visibility: Advanced
+                            order: 12
+                            type: String
+
+                          mimetype:
+                            displayName: Mime Type
+                            description: MIME type of the note's attachment.
+                            visibility: Advanced
+                            order: 13
+                            type: String
+
+                          modifiedon:
+                            displayName: Modified On
+                            description: Date and time when the note was last modified.
+                            visibility: Advanced
+                            order: 18
+                            type: DateTime
+
+                          notetext:
+                            displayName: Description
+                            description: Text of the note.
+                            order: 5
+                            type: String
+
+                          objecttypecode:
+                            displayName: "Object Type "
+                            description: Type of entity with which the note is associated.
+                            visibility: Advanced
+                            order: 20
+                            dynamicValuesConfig:
+                              capability: List
+
+                            type: String
+
+                          overriddencreatedon:
+                            displayName: Record Created On
+                            description: Date and time that the record was migrated.
+                            visibility: Advanced
+                            order: 31
+                            type: DateTime
+
+                          prefix:
+                            displayName: Prefix
+                            description: Prefix of the file pointer in blob storage.
+                            visibility: Advanced
+                            order: 30
+                            type: String
+
+                          stepid:
+                            displayName: Step Id
+                            description: workflow step id associated with the note.
+                            visibility: Advanced
+                            order: 34
+                            type: String
+
+                          subject:
+                            displayName: Title
+                            description: Subject associated with the note.
+                            order: 35
+                            type: String
+
+                          versionnumber:
+                            displayName: Version Number
+                            description: Version number of the note.
+                            visibility: Advanced
+                            order: 36
+                            type: Number
+
+                      operationId: CreateRecordWithOrganization
+
+                    - kind: SendActivity
+                      id: sendActivity_omaVbU
+                      activity: "✅ Note Created: [View Note](https://org2736fd3b.crm4.dynamics.com/main.aspx?appid=666b2ecf-6a32-f011-8c4e-6045bdf404c9&forceUCI=1&pagetype=entityrecord&etn=annotation&id={Topic.CreateRecordWithOrganization.annotationid} )"
+
+              elseActions:
+                - kind: SendActivity
+                  id: sendActivity_svjn4h
+                  activity: ❌ I couldn’t find any Opportunity with that ID. Please double-check and try again.
+
+      elseActions:
+        - kind: SendActivity
+          id: SendActivity_ZHsy47
+          activity: ❌ You must enter an Opportunity Id.
+
+inputType: {}
+outputType: {}

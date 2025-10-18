@@ -1,0 +1,37 @@
+kind: AdaptiveDialog
+beginDialog:
+  kind: OnEventActivity
+  id: main
+  priority: 20
+  eventName: Microsoft.PowerApps.Copilot.RequestSparks
+  actions:
+    - kind: ParseValue
+      id: XcxspA
+      variable: Global.MyCustomSparksGroup
+      valueType:
+        kind: Table
+        properties:
+          displayName: String
+          displaySubtitle: String
+          iconName: String
+          sparks:
+            type:
+              kind: Table
+              properties:
+                displayName: String
+                eventName: String
+                iconName: String
+                payload: String
+                type: String
+
+      value: "[{\"displayName\":\"Smart Insights\",\"displaySubtitle\":\"Turn data into recommendations\",\"iconName\":\"List24Regular\",\"sparks\":[{\"displayName\":\"Deal Pulse\",\"type\":\"PromptText\"},{\"displayName\":\"AI Forecast\",\"type\":\"PromptText\"}]},{\"displayName\":\"Action Boosters\",\"displaySubtitle\":\"Reduce clicks. Close faster.\",\"iconName\":\"List24Regular\",\"sparks\":[{\"displayName\":\"Draft Follow-up Email\",\"type\":\"PromptText\"},{\"displayName\":\"Create Opportunity Note\",\"type\":\"PromptText\"},{\"displayName\":\"Update Stage\",\"type\":\"EventActivity\"}]},{\"displayName\":\"Relationship Radar\",\"displaySubtitle\":\"Strengthen customer connections\",\"iconName\":\"List24Regular\",\"sparks\":[{\"displayName\":\"Customer Sentiment\",\"type\":\"PromptText\"},{\"displayName\":\"Top Stakeholders\",\"type\":\"PromptText\"}]},{\"displayName\":\"Next-Gen\",\"displaySubtitle\":\"Accelerate enablement & collaboration\",\"iconName\":\"List24Regular\",\"sparks\":[{\"displayName\":\"Best Practices Hub\",\"type\":\"PromptText\"},{\"displayName\":\"Team Summary\",\"type\":\"PromptText\"}]}]"
+
+    - kind: SetVariable
+      id: setVariable_kaE01k
+      variable: Topic.SparkGroups
+      value: =Global.MyCustomSparksGroup
+
+    - kind: SetVariable
+      id: setVariable_9PFCUk
+      variable: Global.PA_Copilot_Sparks.sparkGroups
+      value: =ForAll(Sequence(CountRows(Global.PA_Copilot_Sparks.sparkGroups)+CountRows(Topic.SparkGroups)),If(Value<=CountRows(Global.PA_Copilot_Sparks.sparkGroups),Index(Global.PA_Copilot_Sparks.sparkGroups,Value),Index(Topic.SparkGroups,Value-CountRows(Global.PA_Copilot_Sparks.sparkGroups))))

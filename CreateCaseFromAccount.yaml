@@ -1,0 +1,203 @@
+kind: AdaptiveDialog
+beginDialog:
+  kind: OnRecognizedIntent
+  id: main
+  intent:
+    triggerQueries:
+      - Create a case for this account
+      - Open a case for this customer
+      - Create case for account
+      - New case for account
+
+  actions:
+    - kind: SetVariable
+      id: setVariable_dN6BRo
+      variable: Topic.varAccountRecordId
+      value: =Blank()
+
+    - kind: ConditionGroup
+      id: checkContext
+      conditions:
+        - id: hasAccountContext
+          condition: =!IsBlank(Global.PA__Copilot_Model_PageContext.pageContext.id.guid) && Global.PA__Copilot_Model_PageContext.pageContext.entityTypeName = "account"
+          actions:
+            - kind: SetVariable
+              id: setAccountFromContext
+              variable: Topic.varAccountRecordId
+              value: =Global.PA__Copilot_Model_PageContext.pageContext.id.guid
+
+        - id: conditionItem_5PvNys
+          condition: =!IsEmpty(Global.PA_Copilot_DVRecordContext)
+          actions:
+            - kind: SetVariable
+              id: setVariable_Dvf175
+              variable: Topic.varContextRecordType
+              value: =First(Global.PA_Copilot_DVRecordContext).EntityName="account"
+
+            - kind: ConditionGroup
+              id: conditionGroup_tNZKz4
+              conditions:
+                - id: conditionItem_nVGC7S
+                  condition: =Topic.varContextRecordType = true
+                  actions:
+                    - kind: SetVariable
+                      id: setVariable_KcGotZ
+                      variable: Topic.varAccountRecordId
+                      value: =First(Global.PA_Copilot_DVRecordContext).RecordId
+
+              elseActions:
+                - kind: SendActivity
+                  id: sendActivity_Y9sECs
+                  activity: ⚠️ Please select a valid account record before proceeding. Only one account can be selected at a time.
+
+                - kind: EndDialog
+                  id: IU6Heo
+
+      elseActions:
+        - kind: SendActivity
+          id: sendActivity_0n3oM5
+          activity: ⚠️ No account context detected. Please navigate to an account record or select an account from the record picker.
+
+        - kind: EndDialog
+          id: HEj0Wb
+
+    - kind: SendActivity
+      id: sendActivity_9RZyej
+      activity: ✅ Account identified successfully. Let's create a case for this account.
+
+    - kind: Question
+      id: askCaseTitle
+      variable: Topic.CaseTitle
+      prompt: What is the title or subject of this case?
+      entity: StringPrebuiltEntity
+
+    - kind: Question
+      id: askCaseDescription
+      variable: Topic.CaseDescription
+      prompt: Please provide a brief description of the issue or request.
+      entity: StringPrebuiltEntity
+
+    - kind: Question
+      id: question_vASjYi
+      interruptionPolicy:
+        allowInterruption: true
+
+      variable: Topic.FirstNameContact
+      prompt: What is the contact's first name?
+      entity:
+        kind: StringPrebuiltEntity
+        sensitivityLevel: None
+
+    - kind: Question
+      id: question_pVha31
+      interruptionPolicy:
+        allowInterruption: true
+
+      variable: init:Topic.LastNameContact
+      prompt: What is the contact's last name?
+      entity: StringPrebuiltEntity
+
+    - kind: BeginDialog
+      id: 1KPlKq
+      input:
+        binding:
+          text: =Topic.varAccountRecordId
+          text_1: =Topic.FirstNameContact
+          text_2: =Topic.LastNameContact
+          text_3: =Topic.CaseTitle
+          text_4: =Topic.CaseDescription
+
+      dialog: msdyn_salesCopilot.action.Untitled
+      output:
+        binding:
+          caseid: Topic.caseid
+          casenumber: Topic.casenumber
+
+    - kind: SendActivity
+      id: sendResponse
+      activity:
+        attachments:
+          - kind: AdaptiveCardTemplate
+            cardContent: |-
+              ={
+                type: "AdaptiveCard",
+                '$schema': "https://adaptivecards.io/schemas/adaptive-card.json",
+                version: "1.5",
+                body: [
+                  {
+                    type: "Container",
+                    style: "emphasis",
+                    items: [
+                      {
+                        type: "ColumnSet",
+                        columns: [
+                          {
+                            type: "Column",
+                            width: "auto",
+                            items: [
+                              {
+                                type: "TextBlock",
+                                text: "✅",
+                                size: "Large"
+                              }
+                            ]
+                          },
+                          {
+                            type: "Column",
+                            width: "stretch",
+                            items: [
+                              {
+                                type: "TextBlock",
+                                text: "Case Created Successfully",
+                                weight: "Bolder",
+                                size: "Large",
+                                color: "Good"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    type: "TextBlock",
+                    text: "Your case has been created and is ready for review. Click below to open the case in Dynamics 365.",
+                    wrap: true,
+                    spacing: "Medium",
+                    isSubtle: true
+                  },
+                  {
+                    type: "FactSet",
+                    spacing: "Medium",
+                    facts: [
+                      {
+                        title: "Case Number:",
+                        value: Topic.casenumber
+                      },
+                      {
+                        title: "Title:",
+                        value: Topic.CaseTitle
+                      },
+                      {
+                        title: "Contact:",
+                        value: Concatenate(Topic.FirstNameContact," ", Topic.LastNameContact)
+                      },
+                      {
+                        title: "Status:",
+                        value: "Active"
+                      }
+                    ]
+                  }
+                ],
+                actions: [
+                  {
+                    type: "Action.OpenUrl",
+                    title: "Open Case",
+                    url: Concatenate("https://org2736fd3b.crm4.dynamics.com/main.aspx?appid=666b2ecf-6a32-f011-8c4e-6045bdf404c9&forceUCI=1&pagetype=entityrecord&etn=incident&id=", Topic.caseid),
+                    iconUrl: "https://img.icons8.com/fluency/48/000000/open-book.png"
+                  }
+                ]
+              }
+
+    - kind: EndDialog
+      id: end
